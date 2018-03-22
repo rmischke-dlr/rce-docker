@@ -1,0 +1,27 @@
+{
+    "general" : {
+        "instanceName" : "Relay running in Docker container ${hostName}",
+        "isRelay" : true
+    },
+    "network" : {
+        "serverPorts" : {
+            "1" : {
+                "ip" : "0.0.0.0",
+                "port" : 20001
+            }
+        }
+    },
+    "sshServer" : {
+        "enabled" : true,
+        "ip": "127.0.0.1",
+        "port" : 30001,
+        "accounts" : {
+          "wf_observer" : {
+            // hashed form of the "changeme!_user" test password; DO NOT reuse this for live accounts!
+            "passwordHash" : "$2a$10$SQ1f3ApE3sp5eDqEqO8S9uGmk04JsSYnj3GK.6RNf5E6WBElUcTIe",
+            "role" : "workflow_observer", // Allowed commands: components|net info|sysmon|wf list|wf details
+            "enabled" : true
+          }
+        }
+    }
+}
