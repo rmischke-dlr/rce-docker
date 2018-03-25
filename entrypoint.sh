@@ -13,6 +13,7 @@ trigger_shutdown() {
 trap "trigger_shutdown" HUP INT QUIT TERM
 
 LAUNCH_TYPE="$1"
+LAUNCH_PARAMS=
 RCE_VERSION=$(cat /VERSION)
 CONFIGURATION_FILE_LOCATION=/profile/configuration.json
 
@@ -23,15 +24,17 @@ case $LAUNCH_TYPE in
     ;;
   compute)
     ln -s /presets/configuration-compute-example.json $CONFIGURATION_FILE_LOCATION
-    LAUNCH_PARAMS=
+    ;;
+  custom)
+    # intended for mounting external profiles; note that there is no user/group adjustment yet
     ;;
   *)
-    echo "Unrecognized or empty launch type parameter; current values are 'relay' and 'compute'"
+    echo "Unrecognized or empty launch type parameter; allowed values are 'relay', 'compute' and 'custom'"
     exit 1
 esac
 
 echo "Running RCE ($RCE_VERSION)"
 
-/rce/rce --headless "$LAUNCH_PARAMS" -p /profile &
+/rce/rce --headless $LAUNCH_PARAMS -p /profile &
 wait
 echo Shutdown complete
