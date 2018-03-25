@@ -2,7 +2,13 @@
 
 trigger_shutdown() {
   echo Received shutdown signal, stopping RCE
-  /rce/rce -p /profile --shutdown  
+  # this is the slower, but version-independent way:
+  # /rce/rce -p /profile --shutdown  
+  # this is the faster approach, using knowledge of the shutdown mechanism:
+  PORT=$(cat /profile/internal/shutdown.dat | cut -f1 -d":")
+  SECRET=$(cat /profile/internal/shutdown.dat | cut -f2 -d":")
+  echo shutdown $SECRET > /dev/tcp/127.0.0.1/$PORT
+  wait $(pidof rce)
 }
 trap "trigger_shutdown" HUP INT QUIT TERM
 
