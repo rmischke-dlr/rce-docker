@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-slim
 RUN  useradd -ms /bin/bash rce-run
-RUN  apt-get update && apt-get install -y wget sudo && rm -rf /var/lib/apt/lists/*
+RUN  apt-get update && apt-get install -y wget sudo unzip && rm -rf /var/lib/apt/lists/*
 ARG  RCE_BASE_URL=https://software.dlr.de/updates/rce/10.x/products/standard/releases/latest
 RUN  wget -nv -O /VERSION ${RCE_BASE_URL}/zip/VERSION \
  &&  VERSION=$(cat /VERSION) \
