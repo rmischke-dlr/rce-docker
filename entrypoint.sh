@@ -35,6 +35,6 @@ esac
 
 echo "Running RCE ($RCE_VERSION)"
 
-/rce/rce --headless $LAUNCH_PARAMS -p /profile &
+/rce/rce --headless --upgrade-profile $LAUNCH_PARAMS -p /profile &
 wait
 echo Shutdown complete
