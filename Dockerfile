@@ -17,7 +17,8 @@ COPY logging.conf /rce/configuration/services/org.ops4j.pax.logging.properties
 COPY configuration*.json /presets/
 #  adjust permissions
 RUN  chmod a+rx /entrypoint.sh \
- &&  mkdir /profile \
+ &&  mkdir -p /profile/internal \
+ &&  echo 2 > /profile/internal/profile.version \
  &&  chown rce-run: -R /presets /profile
 #  expose default ports for standard connections and SSH; may or may not be actually used
 EXPOSE 20001 30001
